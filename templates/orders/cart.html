@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load math_filters %}
+
+{% block title %}Mi Carrito{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Carrito de Compras</h1>
+{% if cart.items.all %}
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th>Servicio</th>
+      <th>Cantidad</th>
+      <th>Precio unit.</th>
+      <th>Subtotal</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart.items.all %}
+    <tr>
+      <td>{{ item.service.nombre }}</td>
+      <td>
+        <form method="post" action="{% url 'orders:update_item' item.id %}" class="d-inline-flex">
+          {% csrf_token %}
+          <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" class="form-control form-control-sm me-1" style="width: 70px;">
+          <button class="btn btn-sm btn-outline-primary">Actualizar</button>
+        </form>
+      </td>
+      <td>${{ item.precio_unitario }}</td>
+      <td>${{ item.precio_unitario|mul:item.cantidad }}</td>
+      <td>
+        <form method="post" action="{% url 'orders:remove_item' item.id %}">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-outline-danger">×</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3" class="text-end fw-bold">Total:</td>
+      <td colspan="2" class="fw-bold">${{ cart.total_price }}</td>
+    </tr>
+  </tbody>
+</table>
+<a href="{% url 'orders:checkout' %}" class="btn btn-primary">Ir a pagar</a>
+{% else %}
+  <p>Tu carrito está vacío. <a href="{% url 'home' %}">Ver servicios</a></p>
+{% endif %}
+{% endblock %}

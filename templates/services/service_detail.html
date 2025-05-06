@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ service.nombre }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <img src="{{ service.imagen_url }}" class="img-fluid rounded" alt="{{ service.nombre }}">
+  </div>
+  <div class="col-md-6">
+    <h2>{{ service.nombre }}</h2>
+    <p class="lead">{{ service.descripcion }}</p>
+    <p class="h4 text-primary">${{ service.precio }}</p>
+
+    <form id="add-to-cart-form" method="post" action="{% url 'orders:add_item' service.id %}">
+      {% csrf_token %}
+      <div class="input-group mb-3" style="width: 140px;">
+        <button type="button" class="btn btn-outline-secondary" id="decr-btn">−</button>
+        <input type="number" name="cantidad" id="cantidad" class="form-control text-center" value="1" min="1">
+        <button type="button" class="btn btn-outline-secondary" id="incr-btn">+</button>
+      </div>
+      <button type="submit" class="btn btn-success">Agregar al carrito</button>
+    </form>
+  </div>
+</div>
+
+{% block extra_js %}
+<script>
+  const incr = document.getElementById('incr-btn'),
+        decr = document.getElementById('decr-btn'),
+        qty  = document.getElementById('cantidad');
+  incr.addEventListener('click', ()=> qty.value = Math.max(1, parseInt(qty.value)+1));
+  decr.addEventListener('click', ()=> qty.value = Math.max(1, parseInt(qty.value)-1));
+</script>
+{% endblock %}
+{% endblock %}

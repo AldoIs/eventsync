@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load math_filters %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Confirmar Pedido</h1>
+<div class="row">
+  <div class="col-md-8">
+    <h5>Dirección de facturación</h5>
+    <form method="post">
+      {% csrf_token %}
+      <!-- campos de formulario: nombre, tarjeta, etc. -->
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Confirmar y Pagar</button>
+    </form>
+  </div>
+  <div class="col-md-4">
+    <h5>Resumen</h5>
+    <ul class="list-group mb-3">
+      {% for item in cart.items.all %}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>{{ item.cantidad }}× {{ item.service.nombre }}</span>
+        <strong>${{ item.precio_unitario|mul:item.cantidad }}</strong>
+      </li>
+      {% endfor %}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total</span>
+        <strong>${{ cart.total_price }}</strong>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
