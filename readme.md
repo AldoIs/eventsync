@@ -11,7 +11,7 @@ Guía de instalación y puesta en marcha en un equipo nuevo.
 ## 2. Clonar el repositorio
 
 ```bash
-git clone <URL-de-tu-repo> EventSync
+git clone https://github.com/AldoIs/eventsync.git EventSync
 cd EventSync
 ```
 
