@@ -102,11 +102,11 @@ for u in users:
 
 # —————— Crear servicios de prueba ——————
 servicios = [
-    {'nombre': 'Sonido Básico',     'descripcion': 'Equipo de sonido para eventos pequeños',    'precio': 500.00, 'imagen_url': 'https://placehold.it/200x100?text=Sonido'},
-    {'nombre': 'Barra de Bebidas',  'descripcion': 'Bartender y bar completo',                     'precio': 1200.00,'imagen_url': 'https://placehold.it/200x100?text=Bebidas'},
-    {'nombre': 'Catering Estándar', 'descripcion': 'Menú de comida para 50 personas',               'precio': 2500.00,'imagen_url': 'https://placehold.it/200x100?text=Catering'},
-    {'nombre': 'Decoración',        'descripcion': 'Globos, luces y adornos temáticos',             'precio': 800.00, 'imagen_url': 'https://placehold.it/200x100?text=Deco'},
-    {'nombre': 'Fotografía',        'descripcion': 'Sesión fotográfica profesional durante el evento','precio': 1500.00,'imagen_url': 'https://placehold.it/200x100?text=Foto'},
+    {'nombre': 'Sonido Básico',     'descripcion': 'Equipo de sonido para eventos pequeños',    'precio': 500.00, 'imagen_url': 'https://placehold.co/200x100?text=Sonido'},
+    {'nombre': 'Barra de Bebidas',  'descripcion': 'Bartender y bar completo',                     'precio': 1200.00,'imagen_url': 'https://placehold.co/200x100?text=Bebidas'},
+    {'nombre': 'Catering Estándar', 'descripcion': 'Menú de comida para 50 personas',               'precio': 2500.00,'imagen_url': 'https://placehold.co/200x100?text=Catering'},
+    {'nombre': 'Decoración',        'descripcion': 'Globos, luces y adornos temáticos',             'precio': 800.00, 'imagen_url': 'https://placehold.co/200x100?text=Deco'},
+    {'nombre': 'Fotografía',        'descripcion': 'Sesión fotográfica profesional durante el evento','precio': 1500.00,'imagen_url': 'https://placehold.co/200x100?text=Foto'},
 ]
 for s in servicios:
     svc, created = Service.objects.get_or_create(nombre=s['nombre'], defaults={
