@@ -1,23 +1,44 @@
 {% extends 'base.html' %}
-{% block title %}Pedido #{{ order.id }}{% endblock %}
+{% load math_filters %}
+
+{% block title %}Ticket de Pedido #{{ order.id }}{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Seguimiento Pedido #{{ order.id }}</h1>
-<div class="list-group">
-  {% for status, label in order.ESTADOS %}
-    {% if forloop.first or order.estado == status %}
-      <div class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <span class="badge bg-{{ order.estado == status|yesno:'primary,secondary' }}">{{ label }}</span>
-          <small class="text-muted ms-2">
-            {% if order.estado == status %}{{ order.fecha_creacion|date:"DATETIME_FORMAT" }}{% endif %}
-          </small>
-        </div>
-        {% if order.estado == status %}
-          <i class="bi bi-check-circle-fill text-success"></i>
-        {% endif %}
-      </div>
-    {% endif %}
-  {% endfor %}
+<div class="card mx-auto" style="max-width:600px;">
+  <div class="card-header text-center">
+    <h2>Ticket de Pedido</h2>
+    <small>Número: {{ order.id }} | Fecha: {{ order.fecha_creacion|date:"d/m/Y H:i" }}</small>
+  </div>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Cantidad</th>
+          <th>Servicio</th>
+          <th>Precio Unit.</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+        <tr>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.service.nombre }}</td>
+          <td>${{ item.precio_unitario }}</td>
+          <td>${{ item.precio_unitario|mul:item.cantidad }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="text-end fw-bold">TOTAL:</td>
+          <td class="fw-bold">${{ order.total_price }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="card-footer text-center">
+    <span class="badge bg-{{ order.get_estado_display|lower }} text-capitalize">Estado: {{ order.get_estado_display }}</span>
+  </div>
 </div>
 {% endblock %}
