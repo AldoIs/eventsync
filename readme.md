@@ -2,7 +2,7 @@
 
 Guía de instalación y puesta en marcha en un equipo nuevo.
 
-## 1. Prerrequisitos
+## 1. Pre-requisitos
 
 - **Git**  
 - **Python 3.10+**  
